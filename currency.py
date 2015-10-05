@@ -5,7 +5,7 @@ def convert(amount, home_currency_code, location_currency_code): # This function
     return
 
 
-def get_details(country_name): # This function intemperates data from a file
+def get_details(country_name): # This function interprets data from a file
 
     return
 
