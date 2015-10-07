@@ -11,6 +11,7 @@ def load_page(url: str) -> str:
 
         if response.status == 200:
             body_text = str(response.read())
+
             return body_text
         return ""
     except URLError:
