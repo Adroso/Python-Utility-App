@@ -2,14 +2,14 @@ __author__ = 'Adroso'
 
 import web_utility
 
-
-def convert(amount, home_currency_code,
-            location_currency_code):  # This function takes in input data from a home currency and converts it to another by returning the converted amount.
-    import re
+def convert(amount, home_currency_code, location_currency_code):
+    """ This function takes in an amount, generates a url to use Googles currency conversion service and extracts
+    the converted value """
 
     amount_as_string = str(amount)  # Convert to string here because you can not join str and int implicitly
     try:
-        input_url = "https://www.google.com/finance/converter?a=" + amount_as_string + "&from=" + home_currency_code + "&to=" + location_currency_code  # building the search URL
+        input_url = "https://www.google.com/finance/converter?a=" + amount_as_string + "&from=" + home_currency_code + \
+                    "&to=" + location_currency_code  # building the search URL
 
         output_code = web_utility.load_page(input_url)
 
@@ -19,7 +19,7 @@ def convert(amount, home_currency_code,
 
         currency_with_code = span_container.split('class=bld>')  # Takes the leading span tag out
         separated_code_currency = currency_with_code[1]  # separates value and  country code
-        converted_currency = separated_code_currency.split(' ')  # iscolates value
+        converted_currency = separated_code_currency.split(' ')  # isolates value
 
         return converted_currency[0]
     except:
@@ -30,10 +30,10 @@ def get_details(country_name):  # This function interprets data from a file]
 
     currency_details = open("currency_details.txt", 'r', encoding='utf-8')  # load the currency details file as read
 
-    for line in currency_details:  # loops to each line
-        current_line = line.split(",")
-        if country_name in line:  # Searches for the input within the string (DOES NOT SEARCH FOR EXACT)
-            if country_name == current_line[0]:
+    for line in currency_details:
+        current_line = line.split(",")  # Splits data by commas to be exact matched in the following lines
+        if country_name in line:  # Searches for match in line
+            if country_name == current_line[0]:  # Checks if the country name exactly matches the one in line.
                 return current_line
             else:
                 return ()
