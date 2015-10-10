@@ -34,41 +34,42 @@ class Details:
         self.start_date = start_date
         self.end_date = end_date
 
-    def add(self, country_name, start_date, end_date ):
+    def add(self):
+
         """Error Checking Section for add()"""
+        try:
+            isinstance(self.country_name, str)
+            isinstance(self.start_date, str)
+            isinstance(self.end_date, str)
 
-        try:      # All parameters are text
-            isinstance(country_name, str)
-            isinstance(start_date, str)
-            isinstance(end_date, str)
-
-        except:
-            raise Error("Not Text")
+            datetime.datetime.strptime(self.start_date, '%Y/%m/%d')
+            datetime.datetime.strptime(self.end_date, '%Y/%m/%d')
+            
+        except Error:
+            raise ('Incorrect format')
 
         try:
-            datetime.datetime.strptime(self.start_date, '%Y-%m-%d')
-            datetime.datetime.strptime(self.end_date, '%Y-%m-%d')
-        except:
-            raise Error("Incorrect format, should be YYYY/MM/DD")
-
-        try:
-            self.start_date > self.end_date
-        except:
-            print('The start date is after the end date')
+            self.locations.__contains__(self.start_date)
+        except Error:
+            raise ('Start Date Exists')
+        
+        if self.start_date > self.end_date:
+            raise Error('Start Date is after End date')
 
         self.locations.append((self.country_name, self.start_date, self.end_date))
+        return self.locations
 
-    def current_country(self, date_string,):
+    def current_country(self, date_string, ):
+        if not datetime.datetime.strptime(date_string, '%Y/%m/%d'):
+            raise Error('date is not correct')
 
         if self.start_date < date_string < self.end_date:
             return self.country_name
         else:
-            return 'lol'
+            raise Error('Date is in wrong format, YYYY/MM/DD')
 
     def is_empty(self):
-        try:
-            if not self:
-                 return 'Empty'
-        except Error as Empty:
-            print(Empty)
-
+        if not self:
+            return 'Empty'
+        else:
+            return 'Not Empty'
