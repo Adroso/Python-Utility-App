@@ -3,10 +3,11 @@ __author__ = 'Adroso'
 import datetime  # Used for date input checks in Details()
 
 
-class Error(RuntimeError):
+class Error(Exception):
     """Derived from the built-in Exception class, handles errors"""
 
     def __init__(self, value):
+        self.value = value
         super.__init__(value)
 
 
@@ -37,24 +38,24 @@ class Details:
     def add(self):
 
         """Error Checking Section for add()"""
-        try:
-            isinstance(self.country_name, str)
-            isinstance(self.start_date, str)
-            isinstance(self.end_date, str)
+        if not isinstance(self.country_name, str) or isinstance(self.start_date, str) or isinstance(self.end_date, str):
+            raise Error('Error, Input data is meant to be text')
 
+        try:
             datetime.datetime.strptime(self.start_date, '%Y/%m/%d')
             datetime.datetime.strptime(self.end_date, '%Y/%m/%d')
-            
-        except Error:
-            raise ('Incorrect format')
+
+        except Error as err:
+            print(err)
 
         try:
             self.locations.__contains__(self.start_date)
-        except Error:
-            raise ('Start Date Exists')
-        
+        except Error as err:
+            print(err)
+
         if self.start_date > self.end_date:
-            raise Error('Start Date is after End date')
+            raise Error(RuntimeError)
+
 
         self.locations.append((self.country_name, self.start_date, self.end_date))
         return self.locations
