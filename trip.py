@@ -41,8 +41,9 @@ class Details:
             raise Error('Error, Input data is meant to be text')
 
         if not (
-            datetime.datetime.strptime(self.start_date, '%Y/%m/%d') and not datetime.datetime.strptime(self.end_date,
-                                                                                                    '%Y/%m/%d')):
+                    datetime.datetime.strptime(self.start_date, '%Y/%m/%d') and not datetime.datetime.strptime(
+                    self.end_date,
+                    '%Y/%m/%d')):
             raise Error('Wrong date format, YYYY/MM/DD')
 
         if self.locations.__contains__(self.start_date):
@@ -69,6 +70,7 @@ class Details:
         else:
             return 'Not Empty'
 
+
 """ Module Testing"""
 
 if __name__ == "__main__":
@@ -84,8 +86,27 @@ if __name__ == "__main__":
         currency_format = object_input.format_currency(amount)
         string_check = str(object_input)
 
-        print('Formatted Currency for', name, 'of amount', amount, ':',  currency_format)
+        print('Formatted Currency for', name, 'of amount', amount, ':', currency_format)
         print('__str__ method produces:', string_check)
+
+        loop_check = input('check again or move on to next check? Y or N').upper()
+        if loop_check == 'Y':
+            loop_check = True
+        else:
+            loop_check = False
+
+    loop_check = True
+    while loop_check:
+        name = str(input('Country Name:'))
+        startDate = str(input('Trip Start date:'))
+        endDate = str(input('Trip End date:'))
+
+        object_input = Details(name, startDate, endDate)
+        add_test = object_input.add()
+        """Cheching all error checking"""
+
+        dateString = input('Now check current_country by entering a date between the trip:')
+        currentCountry = object_input.current_country(dateString)
 
         loop_check = input('check again? Y or N').upper()
         if loop_check == 'Y':
