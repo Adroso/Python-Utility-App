@@ -46,15 +46,33 @@ def get_details(country_name):  # This function interprets data from a file]
 
 if __name__ == "__main__":
 
-    print()
+    print('TESTING')
+    print('')
+    print('Test of convert()')
+    print("invalid conversion expect: -1", "1", "AUD", "->", "AUD", "=", convert(1, "AUD", "AUD"))
+    print("invalid conversion expect: -1", "1", "JPY", "->", "ABC", "=", convert(1, "JPY", "ABC"))
+    print("invalid conversion expect: -1", "1", "ABC", "->", "USD", "=", convert(1, "ABC", "USD"))
+    print("valid conversion", "10.95", "AUD", "->", "JPY", "=", convert(10.95, "AUD", "JPY"))
+    print("valid conversion reverse", "965.71", "JPY", "->", "AUD", "=", convert(965.71, "JPY", "AUD"))
+    print("valid conversion", "10.95", "AUD", "->", "BGN", "=", convert(10.95, "AUD", "BGN"))
+    print("valid conversion reverse", "13.82", "BGN", "->", "AUD", "=", convert(13.82, "BGN", "AUD"))
+    print("valid conversion", "200.15", "BGN", "->", "JPY", "=", convert(200.15, "BGN", "JPY"))
+    print("valid conversion reverse", "13390.51", "JPY", "->", "BGN", "=", convert(13390.51, "JPY", "BGN"))
+    print("valid conversion", "100", "JPY", "->", "USD", "=", convert(100, "JPY", "USD"))
+    print("valid conversion reverse", "0.83", "USD", "->", "JPY", "=", convert(0.83, "USD", "JPY"))
+    print("valid conversion", "19.99", "USD", "->", "BGN", "=", convert(19.99, "USD", "BGN"))
+    print("valid conversion reverse", "34.39", "BGN", "->", "USD", "=", convert(34.39, "BGN", "USD"))
+    print("valid conversion", "19.99", "USD", "->", "AUD", "=", convert(19.99, "USD", "AUD"))
+    print("valid conversion reverse", "27.26", "AUD", "->", "USD", "=", convert(27.26, "AUD", "USD"))
+    print('')
+    print('Testing get_details()')
 
-
-
-
-
-
-
-
+    print("invalid details expect ():", get_details("Unknown"))
+    print("invalid details expect ():", get_details("Japanese"))
+    print("invalid details expect ():", get_details(""))
+    print("valid details expect details of AUS:", get_details("Australia"))
+    print("valid details expect details of JPN:", get_details("Japan"))
+    print("valid details expect details of HK:", get_details("Hong Kong"))
 
 
 
