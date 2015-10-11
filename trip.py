@@ -7,7 +7,7 @@ class Error(Exception):
     """Derived from the built-in Exception class, handles errors"""
 
     def __init__(self, value):
-        self.value = value
+        super().__init__(value)
 
 
 class Country:
@@ -28,88 +28,89 @@ class Country:
 class Details:
     """Records sequence of countries visited during a trip"""
 
-    def __init__(self, country_name, start_date, end_date):
+    def __init__(self):
         self.locations = []
-        self.country_name = country_name
-        self.start_date = start_date
-        self.end_date = end_date
 
-    def add(self):
+    def add(self, country_name, start_date, end_date):
 
         """Error Checking Section for add()"""
-        if not isinstance(self.country_name, str) or isinstance(self.start_date, str) or isinstance(self.end_date, str):
+        if not (isinstance(country_name, str) or isinstance(start_date, str) or isinstance(end_date, str)):
             raise Error('Error, Input data is meant to be text')
 
-        if not (
-                    datetime.datetime.strptime(self.start_date, '%Y/%m/%d') and not datetime.datetime.strptime(
-                    self.end_date,
-                    '%Y/%m/%d')):
+        if not str(datetime.datetime.strptime(start_date, '%Y/%m/%d') and not str(datetime.datetime.strptime(
+                end_date, '%Y/%m/%d'))):
             raise Error('Wrong date format, YYYY/MM/DD')
 
-        if self.locations.__contains__(self.start_date):
+        if start_date in self.locations:
             raise Error('There is a duplicate start date')
 
-        if self.start_date > self.end_date:
+        if start_date > end_date:
             raise Error('Start Date is after End Date')
 
-        self.locations.append((self.country_name, self.start_date, self.end_date))
+        self.locations.append((country_name, start_date, end_date))
         return self.locations
 
-    def current_country(self, date_string, ):
+    def current_country(self, date_string):
         if not datetime.datetime.strptime(date_string, '%Y/%m/%d'):
             raise Error('date is not correct')
 
-        if self.start_date < date_string < self.end_date:
-            return self.country_name
-        else:
-            raise Error('Date is in wrong format, YYYY/MM/DD')
+
+        for location in self.locations:
+            if location[1] <= date_string <= location[2] in self.locations:
+                return self.locations[0]
+            else:
+                raise Error('lol')
 
     def is_empty(self):
         if not self:
-            return 'Empty'
+            return True  # Empty
         else:
-            return 'Not Empty'
+            return False  # Something there
 
 
 """ Module Testing"""
-
 if __name__ == "__main__":
+    details = Details()
+    details.add('Australia', '2012/08/12', '2013/08/12')
+    details.add('Germany', '2013/08/13', '2013/09/12')
 
-    loop_check = True
-    while loop_check:
-        name = str(input('Country Name:'))
-        code = str(input('Currency Code:'))
-        symbol = str(input('Currency Symbol:'))
-        amount = int(input('Enter Amount:'))
+    details.current_country('2013/08/14')
 
-        object_input = Country(name, code, symbol)
-        currency_format = object_input.format_currency(amount)
-        string_check = str(object_input)
-
-        print('Formatted Currency for', name, 'of amount', amount, ':', currency_format)
-        print('__str__ method produces:', string_check)
-
-        loop_check = input('check again or move on to next check? Y or N').upper()
-        if loop_check == 'Y':
-            loop_check = True
-        else:
-            loop_check = False
-
-    loop_check = True
-    while loop_check:
-        name = str(input('Country Name:'))
-        startDate = str(input('Trip Start date:'))
-        endDate = str(input('Trip End date:'))
-
-        object_input = Details(name, startDate, endDate)
-        add_test = object_input.add()
-        """Cheching all error checking"""
-
-        dateString = input('Now check current_country by entering a date between the trip:')
-        currentCountry = object_input.current_country(dateString)
-
-        loop_check = input('check again? Y or N').upper()
-        if loop_check == 'Y':
-            loop_check = True
-        else:
-            loop_check = False
+# loop_check = True
+#     while loop_check:
+#         name = str(input('Country Name:'))
+#         code = str(input('Currency Code:'))
+#         symbol = str(input('Currency Symbol:'))
+#         amount = int(input('Enter Amount:'))
+#
+#         object_input = Country(name, code, symbol)
+#         currency_format = object_input.format_currency(amount)
+#         string_check = str(object_input)
+#
+#         print('Formatted Currency for', name, 'of amount', amount, ':', currency_format)
+#         print('__str__ method produces:', string_check)
+#
+#         loop_check = input('check again or move on to next check? Y or N').upper()
+#         if loop_check == 'Y':
+#             loop_check = True
+#         else:
+#             loop_check = False
+#
+#     loop_check = True
+#     while loop_check:
+#         name = str(input('Country Name:'))
+#         startDate = str(input('Trip Start date:'))
+#         endDate = str(input('Trip End date:'))
+#
+#         object_input = Details(name, startDate, endDate)
+#         add_test = object_input.add(object_input)
+#         """Cheching all error checking"""
+#
+#         dateString = input('Now check current_country by entering a date between the trip:')
+#         currentCountry = object_input.current_country(dateString)
+#
+#         loop_check = input('check again? Y or N').upper()
+#         if loop_check == 'Y':
+#             loop_check = True
+#         else:
+#             loop_check = False
