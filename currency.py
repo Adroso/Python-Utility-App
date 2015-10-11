@@ -51,7 +51,7 @@ if __name__ == "__main__":
     loop_check = True
     while loop_check:
 
-        amount = str(input('Amount to change:'))
+        amount = input('Amount to change:') # Assume value will be a number
         home = str(input('Home Currency Code:'))
         away = str(input('Away Currency Code:'))
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
         print(check, ' ', amount, ' ', home, '->', away, ' ', converted)
 
-        loop_check = input('check again? Y or N').upper()
+        loop_check = input('check again or move on to next check? Y or N').upper()
         if loop_check == 'Y':
             loop_check = True
         else:
@@ -86,8 +86,9 @@ if __name__ == "__main__":
 
         print(check, ' ', country_name, ' ', details)
 
-        loop_check = input('check again? Y or N').upper()
+        loop_check = input('check again or finnish? Y or N').upper()
         if loop_check == 'Y':
             loop_check = True
         else:
             loop_check = False
+            print('Thank You :)')
