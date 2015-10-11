@@ -37,9 +37,9 @@ class Details:
         # if  (isinstance(country_name, str) or isinstance(start_date, str) or isinstance(end_date, str)):
         #     raise Error('Error, Input data is meant to be text')
 
-        if not (
-            datetime.datetime.strptime(start_date, '%Y/%m/%d') and datetime.datetime.strptime(end_date, '%Y/%m/%d')):
-            raise ValueError  # ValueError used over Error to avoid Exit statement
+        if not datetime.datetime.strptime(start_date, '%Y/%m/%d') or not datetime.datetime.strptime(end_date,
+                                                                                                    '%Y/%m/%d'):
+                raise ValueError  # ValueError used over Error to avoid Exit statement
 
         for location in self.locations:
             if start_date in location[1]:
@@ -81,8 +81,8 @@ if __name__ == "__main__":
     # Country() Testing
     test1 = Country('Germany', 'EUR', '€')
     print('Testing Country()')
-    print('Formating Currency Test Expected,€100 $(amount) :', test1.format_currency(100))
-    print('String Formating Change Expected, Name Currency_Code Currency_Symbol:', str(test1))
+    print('Formatting Currency Test Expected,€100 $(amount) :', test1.format_currency(100))
+    print('String Formatting Change Expected, Name Currency_Code Currency_Symbol:', str(test1))
     print('')
     print('Testing Details()')
     details = Details()
@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
     print('Valid Input, USA is added:')
     try:
-        test3 = details.add('United States of Murica', '2014/11/01', '2014/11/05')
+        test3 = details.add('United States of America', '2014/11/01', '2014/11/05')
         print(test3)
     except Error as err:
         print(err)
@@ -190,7 +190,7 @@ if __name__ == "__main__":
 #
 #         object_input = Details(name, startDate, endDate)
 #         add_test = object_input.add(object_input)
-#         """Cheching all error checking"""
+#         """Checking all error checking"""
 #
 #         dateString = input('Now check current_country by entering a date between the trip:')
 #         currentCountry = object_input.current_country(dateString)
