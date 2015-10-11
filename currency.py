@@ -4,7 +4,7 @@ import web_utility
 
 
 def convert(amount, home_currency_code, location_currency_code):
-    """ This function takes in an amount, generates a url to use Googles currency conversion service and extracts
+    """ This function takes in an amount, generates a url to use Goggles currency conversion service and extracts
     the converted value """
 
     amount_as_string = str(amount)  # Convert to string here because you can not join str and int implicitly
@@ -23,17 +23,18 @@ def convert(amount, home_currency_code, location_currency_code):
         converted_currency = separated_code_currency.split(' ')  # isolates value
 
         return converted_currency[0]
-    except:
+    except IndexError:  # Raised when a sequence subscript is out of range.
         return -1
 
 
-def get_details(country_name):  # This function interprets data from a file]
+def get_details(country_name):
+    """This function interprets data from a file"""
 
-    currency_details = open("currency_details.txt", 'r', encoding='utf-8')  # load the currency details file as read
+    currency_details = open("currency_details.txt", 'r', encoding='utf-8')
 
     for line in currency_details:
         current_line = line.split(",")  # Splits data by commas to be exact matched in the following lines
-        if country_name in line:  # Searches for match in line
+        if country_name in line:
             if country_name == current_line[0]:  # Checks if the country name exactly matches the one in line.
                 return current_line
             else:
@@ -45,7 +46,6 @@ def get_details(country_name):  # This function interprets data from a file]
 """ Module Testing"""
 
 if __name__ == "__main__":
-
     print('TESTING')
     print('')
     print('Test of convert()')
@@ -73,8 +73,6 @@ if __name__ == "__main__":
     print("valid details expect details of AUS:", get_details("Australia"))
     print("valid details expect details of JPN:", get_details("Japan"))
     print("valid details expect details of HK:", get_details("Hong Kong"))
-
-
 
     # Manual Testing
     # converted_save = 0
