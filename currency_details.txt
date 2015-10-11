@@ -1,10 +1,10 @@
 Albania,ALL,Lek
-Afghanistan,AFN,?
+Afghanistan,AFN,؋
 Argentina,ARS,$
 Aruba,AWG,ƒ
 Australia,AUD,$
 Austria,EUR,€
-Azerbaijan,AZN,???
+Azerbaijan,AZN,ман
 Bahamas,BSD,$
 Barbados,BBD,$
 Belarus,BYR,p.
@@ -13,25 +13,25 @@ Belize,BZD,BZ$
 Bermuda,BMD,$
 Bolivia,BOB,$b
 Botswana,BWP,P
-Bulgaria,BGN,??
+Bulgaria,BGN,лв
 Brazil,BRL,R$
 Brunei,BND,$
-Cambodia,KHR,?
+Cambodia,KHR,៛
 Canada,CAD,$
 Cayman,KYD,$
 Chile,CLP,$
 China,CNY,¥
 Colombia,COP,$
-Costa Rica,CRC,?
+Costa Rica,CRC,₡
 Croatia,HRK,kn
-Cuba,CUP,?
+Cuba,CUP,₱
 Cyprus,EUR,€
-Czech Republic,CZK,K?
+Czech Republic,CZK,Kč
 Denmark,DKK,kr
 Egypt,EGP,£
 El Salvador,SVC,$
 Estonia,EEK,kr
-Falkland Islands ,FKP,£
+Falkland Islands,FKP,£
 Fiji,FJD,$
 Finland,EUR,€
 France,EUR,€
@@ -47,54 +47,54 @@ Hong Kong,HKD,$
 Hungary,HUF,Ft
 Iceland,ISK,kr
 Ireland,EUR,€
-India,INR,?
+India,INR,₹
 Indonesia,IDR,Rp
-Iran,IRR,?
+Iran,IRR,﷼
 Isle of Man,IMP,£
-Israel,ILS,?
+Israel,ILS,₪
 Italy,EUR,€
 Jamaica,JMD,J$
 Japan,JPY,¥
 Jersey,JEP,£
-Kazakhstan,KZT,??
-North Korea,KPW,?
-South Korea,KRW,?
-Kyrgyzstan,KGS,??
-Laos,LAK,?
+Kazakhstan,KZT,лв
+North Korea,KPW,₩
+South Korea,KRW,₩
+Kyrgyzstan,KGS,лв
+Laos,LAK,₭
 Latvia,LVL,Ls
 Lebanon,LBP,£
 Liberia,LRD,$
 Lithuania,LTL,Lt
 Luxembourg,EUR,€
-Macedonia,MKD,???
+Macedonia,MKD,ден
 Malaysia,MYR,RM
 Malta,EUR,€
-Mauritius,MUR,?
+Mauritius,MUR,₨
 Mexico,MXN,$
-Mongolia,MNT,?
+Mongolia,MNT,₮
 Mozambique,MZN,MT
 Namibia,NAD,$
-Nepal,NPR,?
+Nepal,NPR,₨
 Netherlands,ANG,ƒ
 New Zealand,NZD,$
 Nicaragua,NIO,C$
-Nigeria,NGN,?
+Nigeria,NGN,₦
 Norway,NOK,kr
-Oman,OMR,?
-Pakistan,PKR,?
+Oman,OMR,﷼
+Pakistan,PKR,₨
 Panama,PAB,B/.
 Paraguay,PYG,Gs
 Peru,PEN,S/.
-Philippines,PHP,?
-Poland,PLN,z?
+Philippines,PHP,₱
+Poland,PLN,zł
 Portugal,EUR,€
-Qatar,QAR,?
+Qatar,QAR,﷼
 Romania,RON,lei
-Russia,RUB,???
+Russia,RUB,руб
 Saint Helena,SHP,£
-Saudi Arabia,SAR,?
-Serbia,RSD,???.
-Seychelles,SCR,?
+Saudi Arabia,SAR,﷼
+Serbia,RSD,Дин.
+Seychelles,SCR,₨
 Singapore,SGD,$
 Slovakia,EUR,€
 Slovenia,EUR,€
@@ -102,22 +102,22 @@ Solomon Islands,SBD,$
 Somalia,SOS,S
 South Africa,ZAR,S
 Spain,EUR,€
-Sri Lanka,LKR,?
+Sri Lanka,LKR,₨
 Sweden,SEK,kr
 Switzerland,CHF,CHF
 Suriname,SRD,$
 Syria,SYP,£
 Taiwan,TWD,NT$
-Thailand,THB,?
+Thailand,THB,฿
 Trinidad and Tobago,TTD,TT$
-Turkey,TRL,?
+Turkey,TRL,₤
 Tuvalu,TVD,$
-Ukraine,UAH,?
+Ukraine,UAH,₴
 United Kingdom,GBP,£
 United States,USD,$
 Uruguay,UYU,$U
-Uzbekistan,UZS,??
+Uzbekistan,UZS,лв
 Venezuela,VEF,Bs
-Viet Nam,VND,?
-Yemen,YER,?
+Viet Nam,VND,₫
+Yemen,YER,﷼
 Zimbabwe,ZWD,Z$
