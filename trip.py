@@ -8,7 +8,6 @@ class Error(Exception):
 
     def __init__(self, value):
         self.value = value
-        super.__init__(value)
 
 
 class Country:
@@ -41,21 +40,16 @@ class Details:
         if not isinstance(self.country_name, str) or isinstance(self.start_date, str) or isinstance(self.end_date, str):
             raise Error('Error, Input data is meant to be text')
 
-        try:
-            datetime.datetime.strptime(self.start_date, '%Y/%m/%d')
-            datetime.datetime.strptime(self.end_date, '%Y/%m/%d')
+        if not (
+            datetime.datetime.strptime(self.start_date, '%Y/%m/%d') and not datetime.datetime.strptime(self.end_date,
+                                                                                                    '%Y/%m/%d')):
+            raise Error('Wrong date format, YYYY/MM/DD')
 
-        except Error as err:
-            print(err)
-
-        try:
-            self.locations.__contains__(self.start_date)
-        except Error as err:
-            print(err)
+        if self.locations.__contains__(self.start_date):
+            raise Error('There is a duplicate start date')
 
         if self.start_date > self.end_date:
-            raise Error(RuntimeError)
-
+            raise Error('Start Date is after End Date')
 
         self.locations.append((self.country_name, self.start_date, self.end_date))
         return self.locations
@@ -74,3 +68,27 @@ class Details:
             return 'Empty'
         else:
             return 'Not Empty'
+
+""" Module Testing"""
+
+if __name__ == "__main__":
+
+    loop_check = True
+    while loop_check:
+        name = str(input('Country Name:'))
+        code = str(input('Currency Code:'))
+        symbol = str(input('Currency Symbol:'))
+        amount = int(input('Enter Amount:'))
+
+        object_input = Country(name, code, symbol)
+        currency_format = object_input.format_currency(amount)
+        string_check = str(object_input)
+
+        print('Formatted Currency for', name, 'of amount', amount, ':',  currency_format)
+        print('__str__ method produces:', string_check)
+
+        loop_check = input('check again? Y or N').upper()
+        if loop_check == 'Y':
+            loop_check = True
+        else:
+            loop_check = False
