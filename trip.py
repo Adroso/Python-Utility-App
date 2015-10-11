@@ -39,10 +39,7 @@ class Details:
 
         if not (
             datetime.datetime.strptime(start_date, '%Y/%m/%d') and datetime.datetime.strptime(end_date, '%Y/%m/%d')):
-            raise ValueError("Incorrect data format, should be YYYY/MM/DD")
-
-        # if not datetime.datetime.strptime(end_date, '%Y/%m/%d'):
-        #     raise ValueError("Incorrect data format, should be YYYY/MM/DD")
+            raise ValueError  # ValueError used over Error to avoid Exit statement
 
         for location in self.locations:
             if start_date in location[1]:
@@ -56,10 +53,10 @@ class Details:
 
     def current_country(self, date_string):
         if not datetime.datetime.strptime(date_string, '%Y/%m/%d'):
-            raise ValueError("Incorrect data format, should be YYYY/MM/DD")
+            raise ValueError  # ValueError used over Error to avoid Exit statement
 
         for location in self.locations:
-            # Convert Strings to dates
+            # Convert Strings inputs to dates for comparison
             date_input = datetime.datetime.strptime(date_string, '%Y/%m/%d').date()
             initial_date = datetime.datetime.strptime(location[1], '%Y/%m/%d').date()
             final_date = datetime.datetime.strptime(location[2], '%Y/%m/%d').date()
@@ -70,12 +67,13 @@ class Details:
 
     def is_empty(self):
         if len(self.locations) == 0:
-            return True  # Empty
+            return True  # Empty locations
         else:
-            return False  # Something there
+            return False  # values in locations
 
 
 if __name__ == "__main__":
+
     """ Module Testing"""
     print('READY...')
     print('TEST')
