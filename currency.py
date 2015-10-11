@@ -46,49 +46,62 @@ def get_details(country_name):  # This function interprets data from a file]
 
 if __name__ == "__main__":
 
-    converted_save = 0
+    print()
 
-    loop_check = True
-    while loop_check:
 
-        amount = input('Amount to change:') # Assume value will be a number
-        home = str(input('Home Currency Code:'))
-        away = str(input('Away Currency Code:'))
 
-        converted = convert(amount, home, away)
 
-        if converted == -1:
-            check = 'invalid conversion'
-        elif converted_save == amount:
-            check = 'valid conversion reverse'
-        else:
-            check = 'valid conversion'
 
-        converted_save = converted
 
-        print(check, ' ', amount, ' ', home, '->', away, ' ', converted)
 
-        loop_check = input('check again or move on to next check? Y or N').upper()
-        if loop_check == 'Y':
-            loop_check = True
-        else:
-            loop_check = False
 
-    loop_check = True
-    while loop_check:
-        country_name = input("Input Test Country:").title()
-        details = get_details(country_name)
 
-        if not details:
-            check = 'invalid details'
-        else:
-            check = 'valid details'
 
-        print(check, ' ', country_name, ' ', details)
 
-        loop_check = input('check again or finnish? Y or N').upper()
-        if loop_check == 'Y':
-            loop_check = True
-        else:
-            loop_check = False
-            print('Thank You :)')
+    # Manual Testing
+    # converted_save = 0
+    #
+    # loop_check = True
+    # while loop_check:
+    #
+    #     amount = input('Amount to change:') # Assume value will be a number
+    #     home = str(input('Home Currency Code:'))
+    #     away = str(input('Away Currency Code:'))
+    #
+    #     converted = convert(amount, home, away)
+    #
+    #     if converted == -1:
+    #         check = 'invalid conversion'
+    #     elif converted_save == amount:
+    #         check = 'valid conversion reverse'
+    #     else:
+    #         check = 'valid conversion'
+    #
+    #     converted_save = converted
+    #
+    #     print(check, ' ', amount, ' ', home, '->', away, ' ', converted)
+    #
+    #     loop_check = input('check again or move on to next check? Y or N').upper()
+    #     if loop_check == 'Y':
+    #         loop_check = True
+    #     else:
+    #         loop_check = False
+    #
+    # loop_check = True
+    # while loop_check:
+    #     country_name = input("Input Test Country:").title()
+    #     details = get_details(country_name)
+    #
+    #     if not details:
+    #         check = 'invalid details'
+    #     else:
+    #         check = 'valid details'
+    #
+    #     print(check, ' ', country_name, ' ', details)
+    #
+    #     loop_check = input('check again or finnish? Y or N').upper()
+    #     if loop_check == 'Y':
+    #         loop_check = True
+    #     else:
+    #         loop_check = False
+    #         print('Thank You :)')
