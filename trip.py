@@ -57,18 +57,12 @@ class Details:
 
 
         for location in self.locations:
-            date_input = datetime.datetime.strptime(date_string, '%Y/%m/%d').date()
-            initial_date = datetime.datetime.strptime(location[1], '%Y/%m/%d').date()
-            final_date = datetime.datetime.strptime(location[2], '%Y/%m/%d').date()
-            print(type(initial_date))
-            print(initial_date)
-            print(type(date_input))
-            print(date_input)
-            print(type(final_date))
-            print(final_date)
+            # date_input = datetime.datetime.strptime(date_string, '%Y/%m/%d').date()
+            # initial_date = datetime.datetime.strptime(location[1], '%Y/%m/%d').date()
+            # final_date = datetime.datetime.strptime(location[2], '%Y/%m/%d').date()
 
+            if (datetime.datetime.strptime(location[1], '%Y/%m/%d').date() < datetime.datetime.strptime(date_string, '%Y/%m/%d').date() < datetime.datetime.strptime(location[2], '%Y/%m/%d').date()) in self.locations:
 
-            if (initial_date < date_input < final_date):
                 return location[0]
             else:
                 raise Error('lol no trips')
@@ -86,9 +80,9 @@ if __name__ == "__main__":
     details = Details()
     details.add('Australia', '2018/08/12', '2100/08/12')
     details.add('Germany', '2012/08/12', '2014/09/12')
-    
 
-    print(details.current_country('2020/02/15'))
+
+    print(details.current_country('2012/08/15'))
     print(details.locations)
 
 
