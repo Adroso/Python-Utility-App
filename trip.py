@@ -34,8 +34,8 @@ class Details:
     def add(self, country_name, start_date, end_date):
 
         """Error Checking Section for add()"""
-        # if  (isinstance(country_name, str) or isinstance(start_date, str) or isinstance(end_date, str)):
-        #     raise Error('Error, Input data is meant to be text')
+        if not (isinstance(country_name, str) or isinstance(start_date, str) or isinstance(end_date, str)):
+            raise TypeError('Error, Input data is meant to be text')
 
         if not datetime.datetime.strptime(start_date, '%Y/%m/%d') or not datetime.datetime.strptime(end_date,
                                                                                                     '%Y/%m/%d'):
@@ -87,6 +87,13 @@ if __name__ == "__main__":
     print('Testing Details()')
     details = Details()
     print('Date conforms to correct format Details added', details.add('Australia', '2014/09/12', '2014/09/14'))
+
+    test_int = 3
+    print('Inputs Text expected error, needs to be str not int:')
+    try:
+        details.add('France', test_int, "2014/09/14")
+    except TypeError as err:
+        print(err)
 
     print('Invalid input, wrong date format (extra digits) vv')
     try:
