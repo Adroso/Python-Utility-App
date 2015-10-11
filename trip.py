@@ -41,8 +41,9 @@ class Details:
                 end_date, '%Y/%m/%d'))):
             raise Error('Wrong date format, YYYY/MM/DD')
 
-        if start_date in self.locations:
-            raise Error('There is a duplicate start date')
+        for location in self.locations:
+            if start_date in location[1]:
+                raise Error('There is a duplicate start date')
 
         if start_date > end_date:
             raise Error('Start Date is after End Date')
@@ -56,13 +57,25 @@ class Details:
 
 
         for location in self.locations:
-            if location[1] <= date_string <= location[2] in self.locations:
-                return self.locations[0]
+            date_input = datetime.datetime.strptime(date_string, '%Y/%m/%d').date()
+            initial_date = datetime.datetime.strptime(location[1], '%Y/%m/%d').date()
+            final_date = datetime.datetime.strptime(location[2], '%Y/%m/%d').date()
+            print(type(initial_date))
+            print(initial_date)
+            print(type(date_input))
+            print(date_input)
+            print(type(final_date))
+            print(final_date)
+
+
+            if (initial_date < date_input < final_date):
+                return location[0]
             else:
-                raise Error('lol')
+                raise Error('lol no trips')
+
 
     def is_empty(self):
-        if not self:
+        if len(self.locations) == 0:
             return True  # Empty
         else:
             return False  # Something there
@@ -71,10 +84,13 @@ class Details:
 """ Module Testing"""
 if __name__ == "__main__":
     details = Details()
-    details.add('Australia', '2012/08/12', '2013/08/12')
-    details.add('Germany', '2013/08/13', '2013/09/12')
+    details.add('Australia', '2018/08/12', '2100/08/12')
+    details.add('Germany', '2012/08/12', '2014/09/12')
+    
 
-    details.current_country('2013/08/14')
+    print(details.current_country('2020/02/15'))
+    print(details.locations)
+
 
 # loop_check = True
 #     while loop_check:
