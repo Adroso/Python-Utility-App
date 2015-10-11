@@ -37,9 +37,12 @@ class Details:
         # if  (isinstance(country_name, str) or isinstance(start_date, str) or isinstance(end_date, str)):
         #     raise Error('Error, Input data is meant to be text')
 
-        if not (datetime.datetime.strptime(start_date, '%Y/%m/%d')) and (datetime.datetime.strptime(
-                end_date, '%Y/%m/%d')):
+        if not (
+            datetime.datetime.strptime(start_date, '%Y/%m/%d') and datetime.datetime.strptime(end_date, '%Y/%m/%d')):
             raise ValueError("Incorrect data format, should be YYYY/MM/DD")
+
+        # if not datetime.datetime.strptime(end_date, '%Y/%m/%d'):
+        #     raise ValueError("Incorrect data format, should be YYYY/MM/DD")
 
         for location in self.locations:
             if start_date in location[1]:
@@ -53,11 +56,10 @@ class Details:
 
     def current_country(self, date_string):
         if not datetime.datetime.strptime(date_string, '%Y/%m/%d'):
-            raise Error("Incorrect data format, should be YYYY/MM/DD")
-
+            raise ValueError("Incorrect data format, should be YYYY/MM/DD")
 
         for location in self.locations:
-            #Convert Strings to dates
+            # Convert Strings to dates
             date_input = datetime.datetime.strptime(date_string, '%Y/%m/%d').date()
             initial_date = datetime.datetime.strptime(location[1], '%Y/%m/%d').date()
             final_date = datetime.datetime.strptime(location[2], '%Y/%m/%d').date()
@@ -72,35 +74,35 @@ class Details:
         else:
             return False  # Something there
 
+
 if __name__ == "__main__":
     """ Module Testing"""
     print('READY...')
     print('TEST')
 
-    #Country() Testing
+    # Country() Testing
     test1 = Country('Germany', 'EUR', '€')
     print('Testing Country()')
-
     print('Formating Currency Test Expected,€100 $(amount) :', test1.format_currency(100))
     print('String Formating Change Expected, Name Currency_Code Currency_Symbol:', str(test1))
     print('')
     print('Testing Details()')
     details = Details()
     print('Date conforms to correct format Details added', details.add('Australia', '2014/09/12', '2014/09/14'))
-    # print('Invalid input, wrong date format vv')
-    #
-    # try:
-    #     details.add('Japan', '1997/12/12', '20/09/2032')
-    # except ValueError as err:
-    #     print(err)
-    # print('Invalid input, wrong date format vv')
-    #
-    # try:
-    #     details.add('Australia', '2014/01/20', '10/02/20')
-    # except Error as err:
-    #     print(err)
+
+    print('Invalid input, wrong date format (extra digits) vv')
+    try:
+        details.add('Japan', '201378/11/13', '2014/12/12')
+    except ValueError as err:
+        print(err)
+    print('Invalid input, wrong date format (year last) vv')
+    try:
+        details.add('Japan', '2013/11/13', '20/12/1209')
+    except ValueError as err:
+        print(err)
+
     print('')
-    #Testing start date check
+    # Testing start date check
     print('Invalid Input start date is after end date:')
     try:
         details.add('Japan', '2015/11/01', '2013/11/01')
@@ -113,7 +115,8 @@ if __name__ == "__main__":
     except Error as err:
         print(err)
     print('')
-    #Testing a previous date
+
+    # Testing a previous date
     print('Invalid Input date 2013/11/01 was used before:')
     try:
         test3 = details.add('USA', '2013/11/01', '2013/11/05')
@@ -128,7 +131,8 @@ if __name__ == "__main__":
     except Error as err:
         print(err)
     print('')
-    #Testing current_country
+
+    # Testing current_country
 
     print('Input date is already in locations, returns country name:')
     try:
@@ -144,7 +148,8 @@ if __name__ == "__main__":
     except Error as err:
         print(err)
     print('')
-    #Testing is_empty()
+
+    # Testing is_empty()
     print('Testing is_empty')
     try:
         print('locations has data - Expected False:', details.is_empty())
