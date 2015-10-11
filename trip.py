@@ -156,17 +156,13 @@ if __name__ == "__main__":
 
     # Testing is_empty()
     print('Testing is_empty')
-    try:
-        print('locations has data - Expected False:', details.is_empty())
-    except Error as err:
-        print(err)
+    print('locations has data - Expected False:', details.is_empty())
+
 
     details.locations = []
     print('Testing is_empty')
-    try:
-        print('locations is empty - Expected True:', details.is_empty())
-    except Error as err:
-        print(err)
+    print('locations is empty - Expected True:', details.is_empty())
+
 
 
 # loop_check = True
