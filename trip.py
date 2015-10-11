@@ -34,16 +34,16 @@ class Details:
     def add(self, country_name, start_date, end_date):
 
         """Error Checking Section for add()"""
-        if not (isinstance(country_name, str) or isinstance(start_date, str) or isinstance(end_date, str)):
-            raise Error('Error, Input data is meant to be text')
+        # if  (isinstance(country_name, str) or isinstance(start_date, str) or isinstance(end_date, str)):
+        #     raise Error('Error, Input data is meant to be text')
 
-        if not str(datetime.datetime.strptime(start_date, '%Y/%m/%d') and not str(datetime.datetime.strptime(
-                end_date, '%Y/%m/%d'))):
-            raise Error('Wrong date format, YYYY/MM/DD')
+        if not (datetime.datetime.strptime(start_date, '%Y/%m/%d')) and (datetime.datetime.strptime(
+                end_date, '%Y/%m/%d')):
+            raise ValueError("Incorrect data format, should be YYYY/MM/DD")
 
         for location in self.locations:
             if start_date in location[1]:
-                raise Error('There is a duplicate start date')
+                raise Error('There is a duplicate start date in the list')
 
         if start_date > end_date:
             raise Error('Start Date is after End Date')
@@ -53,20 +53,18 @@ class Details:
 
     def current_country(self, date_string):
         if not datetime.datetime.strptime(date_string, '%Y/%m/%d'):
-            raise Error('date is not correct')
+            raise Error("Incorrect data format, should be YYYY/MM/DD")
 
 
         for location in self.locations:
-            # date_input = datetime.datetime.strptime(date_string, '%Y/%m/%d').date()
-            # initial_date = datetime.datetime.strptime(location[1], '%Y/%m/%d').date()
-            # final_date = datetime.datetime.strptime(location[2], '%Y/%m/%d').date()
+            #Convert Strings to dates
+            date_input = datetime.datetime.strptime(date_string, '%Y/%m/%d').date()
+            initial_date = datetime.datetime.strptime(location[1], '%Y/%m/%d').date()
+            final_date = datetime.datetime.strptime(location[2], '%Y/%m/%d').date()
 
-            if (datetime.datetime.strptime(location[1], '%Y/%m/%d').date() < datetime.datetime.strptime(date_string, '%Y/%m/%d').date() < datetime.datetime.strptime(location[2], '%Y/%m/%d').date()) in self.locations:
-
+            if initial_date <= date_input <= final_date:
                 return location[0]
-            else:
-                raise Error('lol no trips')
-
+        raise Error('There is no country for this date')
 
     def is_empty(self):
         if len(self.locations) == 0:
@@ -74,16 +72,91 @@ class Details:
         else:
             return False  # Something there
 
-
-""" Module Testing"""
 if __name__ == "__main__":
+    """ Module Testing"""
+    print('READY...')
+    print('TEST')
+
+    #Country() Testing
+    test1 = Country('Germany', 'EUR', '€')
+    print('Testing Country()')
+
+    print('Formating Currency Test Expected,€100 $(amount) :', test1.format_currency(100))
+    print('String Formating Change Expected, Name Currency_Code Currency_Symbol:', str(test1))
+    print('')
+    print('Testing Details()')
     details = Details()
-    details.add('Australia', '2018/08/12', '2100/08/12')
-    details.add('Germany', '2012/08/12', '2014/09/12')
+    print('Date conforms to correct format Details added', details.add('Australia', '2014/09/12', '2014/09/14'))
+    # print('Invalid input, wrong date format vv')
+    #
+    # try:
+    #     details.add('Japan', '1997/12/12', '20/09/2032')
+    # except ValueError as err:
+    #     print(err)
+    # print('Invalid input, wrong date format vv')
+    #
+    # try:
+    #     details.add('Australia', '2014/01/20', '10/02/20')
+    # except Error as err:
+    #     print(err)
+    print('')
+    #Testing start date check
+    print('Invalid Input start date is after end date:')
+    try:
+        details.add('Japan', '2015/11/01', '2013/11/01')
+    except Error as err:
+        print(err)
+    print('Valid Input Saudi Arabia and details added:')
+    try:
+        test2 = details.add('Saudi Arabia', '2013/11/01', '2013/11/05')
+        print(test2)
+    except Error as err:
+        print(err)
+    print('')
+    #Testing a previous date
+    print('Invalid Input date 2013/11/01 was used before:')
+    try:
+        test3 = details.add('USA', '2013/11/01', '2013/11/05')
 
+    except Error as err:
+        print(err)
 
-    print(details.current_country('2012/08/15'))
-    print(details.locations)
+    print('Valid Input, USA is added:')
+    try:
+        test3 = details.add('United States of Murica', '2014/11/01', '2014/11/05')
+        print(test3)
+    except Error as err:
+        print(err)
+    print('')
+    #Testing current_country
+
+    print('Input date is already in locations, returns country name:')
+    try:
+        test4 = details.current_country('2014/11/02')
+        print(test4)
+    except Error as err:
+        print(err)
+
+    print('Invalid Input, no record of a current country:')
+    try:
+        test4 = details.current_country('2016/11/02')
+        print(test4)
+    except Error as err:
+        print(err)
+    print('')
+    #Testing is_empty()
+    print('Testing is_empty')
+    try:
+        print('locations has data - Expected False:', details.is_empty())
+    except Error as err:
+        print(err)
+
+    details.locations = []
+    print('Testing is_empty')
+    try:
+        print('locations is empty - Expected True:', details.is_empty())
+    except Error as err:
+        print(err)
 
 
 # loop_check = True
