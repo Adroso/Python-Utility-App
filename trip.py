@@ -19,7 +19,7 @@ class Country:
         self.currency_symbol = currency_symbol
 
     def format_currency(self, value):
-        return self.currency_symbol + format(value, ".0f")
+        return self.currency_symbol + str(round(value, 2))
 
     def __str__(self):
         return str(self.name + ' ' + self.currency_code + ' ' + self.currency_symbol)
