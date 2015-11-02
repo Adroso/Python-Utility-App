@@ -22,7 +22,7 @@ def convert(amount, home_currency_code, location_currency_code):
         separated_code_currency = currency_with_code[1]  # separates value and  country code
         converted_currency = separated_code_currency.split(' ')  # isolates value
 
-        return converted_currency[0]
+        return float(converted_currency[0])
     except IndexError:  # Raised when a sequence subscript is out of range.
         return -1
 
@@ -41,6 +41,19 @@ def get_details(country_name):
                 return ()
     currency_details.close()
     return ()
+
+def get_all_details():
+    """This function returns a dictionary of currency details"""
+
+    all_country_details = {}
+
+    details_file = open("currency_details.txt", 'r', encoding='utf-8')
+    for line in details_file:
+        split_details = line.split(",")
+        all_country_details[split_details[0]] = (split_details[0], split_details[1], split_details[2])
+    return all_country_details
+
+
 
 
 """ Module Testing"""
@@ -73,6 +86,13 @@ if __name__ == "__main__":
     print("valid details expect details of AUS:", get_details("Australia"))
     print("valid details expect details of JPN:", get_details("Japan"))
     print("valid details expect details of HK:", get_details("Hong Kong"))
+
+    # New get_all_details testing:
+    print(get_all_details())
+    testing = get_all_details()
+    print("keys", testing.keys())
+    print(testing["Australia"])
+
 
     # Manual Testing
     # converted_save = 0
