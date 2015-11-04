@@ -1,26 +1,25 @@
 BoxLayout:
     orientation: 'vertical'
-
     Label:
-        Color:
-            rgba: 0, 1, 0, 1
-        text: 'Current trip location:'
+        font_size: 25
+        text: app.current_trip
+        color: (1, 1, 1, 1)
 
     BoxLayout:
         Spinner:
-            size: 1, 3
+            text: 'lol'
         TextInput:
             size: 100, 350
 
     BoxLayout:
         Label:
-            text: 'Home Country'
+            text: app.home_country
         TextInput:
             size: 100, 350
     BoxLayout
         orientation: 'horizontal'
         Label:
-            text: 'Current Date'
+            text: app.current_date_build
         Label:
             text: 'Status'
             size: 100, 350
