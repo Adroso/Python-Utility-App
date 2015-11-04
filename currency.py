@@ -43,9 +43,17 @@ def get_details(country_name):
     currency_details.close()
     return ()
 
+def get_all_details():
+    """This function returns a dictionary of currency details"""
 
+    all_country_details = {}
 
-
+    details_file = open("currency_details.txt", 'r', encoding='utf-8')
+    for line in details_file:
+        split_details = line.split(",")
+        all_country_details[split_details[0]] = (split_details[0], split_details[1], split_details[2])
+        details_file.close()
+    return all_country_details
 
 
 """ Module Testing"""
