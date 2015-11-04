@@ -36,7 +36,8 @@ def get_details(country_name):
         current_line = line.split(",")  # Splits data by commas to be exact matched in the following lines
         if country_name in line:
             if country_name == current_line[0]:  # Checks if the country name exactly matches the one in line.
-                return current_line
+                line_details = current_line.strip('\n')
+                return line_details
             else:
                 return ()
     currency_details.close()
