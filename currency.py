@@ -51,6 +51,7 @@ def get_all_details():
     for line in details_file:
         split_details = line.split(",")
         all_country_details[split_details[0]] = (split_details[0], split_details[1], split_details[2])
+        details_file.close()
     return all_country_details
 
 
