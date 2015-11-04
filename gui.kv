@@ -1,28 +1,41 @@
 BoxLayout:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
     orientation: 'vertical'
     Label:
         font_size: 25
         text: app.current_trip
-        color: (1, 1, 1, 1)
+        color: (0, 0, 0, 1)
 
     BoxLayout:
         Spinner:
-            text: 'lol'
+            values: app.saved_trips
+
+
         TextInput:
             size: 100, 350
 
     BoxLayout:
         Label:
+            color: (0, 0, 0, 1)
             text: app.home_country
         TextInput:
             size: 100, 350
     BoxLayout
         orientation: 'horizontal'
         Label:
+            color: (0, 0, 0, 1)
             text: app.current_date_build
         Label:
-            text: 'Status'
+            color: (0, 0, 0, 1)
+            font_size: 10
+            id: app_status
             size: 100, 350
             pos: 0, 300
     Button:
-        text: 'Update Rate'
+        text: 'Update Currency'
+        on_press: app.app_update()
