@@ -8,17 +8,16 @@ import datetime
 from datetime import datetime
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.properties import ObjectProperty
+# from kivy.properties import ObjectProperty
 from kivy.core.window import Window
-from kivy.properties import StringProperty
-from kivy.properties import ListProperty
-from kivy.graphics import Color
-
+# from kivy.properties import StringProperty
+# from kivy.properties import ListProperty
+# from kivy.graphics import Color
 
 
 class CurrencyConverterApp(App):
 
-    countries_spinner = StringProperty()
+    # countries_spinner = StringProperty()
     # saved_trips = ListProperty()
 
     saved_trips = []
@@ -53,22 +52,6 @@ class CurrencyConverterApp(App):
 
     def __init__(self):
         super(CurrencyConverterApp, self).__init__()
-        # application_config = open("config.txt", 'r', encoding='utf-8')
-        #
-        # #checking config file for correct data protocols
-        # first_line = application_config.readline()
-        # if first_line == '' or len(first_line.split()) > 2:
-        #     self.root.ids.app_status.text = 'invalid trip details'
-        # else:
-        #     self.root.ids.app_status.text = 'trip details loaded'
-        # # Applies to lines after the header line
-        # for line in application_config:
-        #     if len(line.split(',')) >3:
-        #         self.root.ids.app_status.text = 'invalid trip details'
-        #     else:
-        #         self.root.ids.app_status.text = 'trip details loaded'
-        #
-        # application_config.close()
 
     def build(self):
         Window.size = 350, 700
@@ -87,29 +70,15 @@ class CurrencyConverterApp(App):
         first_line = application_config.readline()
         if first_line.strip("\n") in all_country_details:
             for line in application_config:
-                print(len(line.split(',')))
                 if len(line.split(',')) != 3:
-                    self.root.ids.app_status.text = 'invalid trip details'
+                    self.disable_gui()
+
                     break
                 else:
-                    self.root.ids.app_status.text = 'invalid trip details'
-
+                    # self.root.ids.app_status.text = 'invalid trip details'
                     self.root.ids.app_status.text = 'trip details accepted'
         else:
-            self.root.ids.app_status.text = 'invalid trip details'
-        # else:
-        #     for line in application_config:
-        #         if len(line.split(',')) >3:
-        #             self.root.ids.app_status.text = 'invalid trip details'
-        #         else:
-        #             self.root.ids.app_status.text = 'trip details loaded successfully'
-
-        # Applies to lines after the header line
-        # for line in application_config:
-        #     if len(line.split(',')) >3:
-        #         self.root.ids.app_status.text = 'invalid trip details'
-        #     else:
-        #         self.root.ids.app_status.text = 'trip details loaded successfully'
+            self.disable_gui()
 
         application_config.close()
 
@@ -127,9 +96,33 @@ class CurrencyConverterApp(App):
     #         saved_trips.append(current_line[0])
     #     return saved_trips
 
+    def disable_gui(self):
+        """ This Function is used on startup when the config file is incorrect"""
+        self.root.ids.app_status.text = 'invalid trip details'
+        self.root.ids.away_currency_input.disabled = True
+        self.root.ids.away_spinner.disabled = True
+        self.root.ids.home_currency_input.disabled = True
+        self.root.ids.update_currency.disabled = True
 
     def handle_convert(self):
+
         """handles the calculation of the conversion between rates"""
+        all_country_details = currency.get_all_details()
+
+
+        # extracting matching away code out of dictionary
+        away_country_details = all_country_details.get(self.root.ids.away_spinner.text)
+        away_currency_code = away_country_details[1]
+
+        # extracting matching home code out of dictionary
+        home_country_details = all_country_details.get(self.root.ids.user_country.text.strip('\n'))
+        home_currency_code = home_country_details[1]
+
+
+        convert_rate = currency.convert(self.root.ids.away_currency_input.text,away_currency_code,home_currency_code)
+        self.root.ids.home_currency_input.text = str(convert_rate)
+        self.root.ids.app_status.text = (away_currency_code + '(' + away_country_details[2] + ') to ' + home_currency_code + '(' + home_country_details[2] +')')
+
 
 
 if __name__ == '__main__':
