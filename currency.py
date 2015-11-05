@@ -42,6 +42,7 @@ def get_details(country_name):
     currency_details.close()
     return ()
 
+
 def get_all_details():
     """This function returns a dictionary of currency details"""
 
@@ -52,9 +53,6 @@ def get_all_details():
         split_details = line.split(",")
         all_country_details[split_details[0]] = (split_details[0], split_details[1], split_details[2])
     return all_country_details
-
-
-
 
 
 """ Module Testing"""
@@ -80,19 +78,19 @@ def get_all_details():
 #     print("valid conversion reverse", "27.26", "AUD", "->", "USD", "=", convert(27.26, "AUD", "USD"))
 #     print('')
 #     print('Testing get_details()')
-# 
+#
 #     print("invalid details expect ():", get_details("Unknown"))
 #     print("invalid details expect ():", get_details("Japanese"))
 #     print("invalid details expect ():", get_details(""))
 #     print("valid details expect details of AUS:", get_details("Australia"))
 #     print("valid details expect details of JPN:", get_details("Japan"))
 #     print("valid details expect details of HK:", get_details("Hong Kong"))
-
-# New get_all_details testing:
-print(get_all_details())
-testing = get_all_details()
-print("keys", testing.keys())
-print(testing["Australia"])
+#
+# # New get_all_details testing:
+# print(get_all_details())
+# testing = get_all_details()
+# print("keys", testing.keys())
+# print(testing["Australia"])
 
 
 # Manual Testing
