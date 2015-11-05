@@ -27,7 +27,6 @@ class CurrencyConverterApp(App):
         current_line = line.split(',')
         saved_trips.append(current_line[0])
 
-
     #Constucting current date string
     current_date = time.strftime("%Y/%m/%d")
     current_date_build = 'Today is:' + '\n' + current_date
@@ -58,6 +57,7 @@ class CurrencyConverterApp(App):
         self.title = "Foreign Exchange Calculator"
         self.root = Builder.load_file('gui.kv')
         self.config_check()
+        self.disable_gui()
 
 
         return self.root
@@ -71,6 +71,7 @@ class CurrencyConverterApp(App):
         if first_line.strip("\n") in all_country_details:
             for line in application_config:
                 if len(line.split(',')) != 3:
+                    self.root.ids.app_status.text = 'invalid trip details'
                     self.disable_gui()
 
                     break
@@ -78,11 +79,14 @@ class CurrencyConverterApp(App):
                     # self.root.ids.app_status.text = 'invalid trip details'
                     self.root.ids.app_status.text = 'trip details accepted'
         else:
+            self.root.ids.app_status.text = 'invalid trip details'
             self.disable_gui()
 
         application_config.close()
 
     def app_update(self):
+        self.enable_gui()
+        self.update_currency()
         current_time = datetime.now().strftime('%H:%M:%S')
         self.root.ids.app_status.text = 'updated at ' + current_time
 
@@ -98,14 +102,25 @@ class CurrencyConverterApp(App):
 
     def disable_gui(self):
         """ This Function is used on startup when the config file is incorrect"""
-        self.root.ids.app_status.text = 'invalid trip details'
         self.root.ids.away_currency_input.disabled = True
         self.root.ids.away_spinner.disabled = True
         self.root.ids.home_currency_input.disabled = True
-        self.root.ids.update_currency.disabled = True
+        # self.root.ids.update_currency.disabled = True
+
+    def enable_gui(self):
+        """ This Function is used on startup when the config file is incorrect"""
+        self.root.ids.away_currency_input.disabled = False
+        self.root.ids.away_spinner.disabled = False
+        self.root.ids.home_currency_input.disabled = False
+        self.root.ids.update_currency.disabled = False
+
+    def update_currency(self):
+        """This function caches a conversion rate between the selected home country and away country"""
+        self.root.ids.away_spinner.text = str(self.current_trip)
+        
+
 
     def handle_convert(self, event_catcher):
-
         """handles the calculation of the conversion between rates"""
         all_country_details = currency.get_all_details()
 
@@ -126,6 +141,9 @@ class CurrencyConverterApp(App):
             convert_rate = currency.convert(self.root.ids.home_currency_input.text, home_currency_code, away_currency_code)
             self.root.ids.away_currency_input.text = str(convert_rate)
             self.root.ids.app_status.text = (home_currency_code + '(' + home_country_details[2] + ') to ' + away_currency_code + '(' + away_country_details[2] +')')
+        else:
+            """lol"""
+            # self.root.ids.app_status.text =
 
 
 if __name__ == '__main__':
