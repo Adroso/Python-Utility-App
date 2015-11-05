@@ -112,8 +112,27 @@ class CurrencyConverterApp(App):
             self.root.ids.away_spinner.text = str(user_country)
             self.root.ids.home_currency_input.text = str('')
 
-        cached_conversion = {}
-        # convert_rate = currency.convert(self.root.ids.away_currency_input.text, away_currency_code, home_currency_code)
+        self.cached_conversion = {}
+        # for country in self.saved_trips:
+        all_country_details = currency.get_all_details()
+
+        home_country_details = all_country_details.get(self.root.ids.user_country.text.strip('\n'))
+        home_currency_code = home_country_details[1]
+
+        away_country_details = all_country_details.get(self.root.ids.away_spinner.text)
+        away_currency_code = away_country_details[1]
+
+        for country in self.saved_trips:
+            country_code = all_country_details.get(country)
+            current_code = country_code[1]
+            current_rate = currency.convert(1, country_code[1], home_currency_code)
+            self.cached_conversion[country] = current_rate
+            if current_code == away_currency_code:
+                pass
+            else:
+                current_rate = currency.convert(1, country_code[1], home_currency_code)
+                self.cached_conversion[country] = current_rate
+
 
     def handle_convert(self, event_catcher):
         """handles the calculation of the conversion between rates"""
@@ -128,17 +147,24 @@ class CurrencyConverterApp(App):
         home_currency_code = home_country_details[1]
 
         #On initial startup, stops -1 being displayed in the home text box.
-        if self.root.ids.away_currency_input.text == '\n':
+        if self.root.ids.away_currency_input.text == '':
             self.root.ids.home_currency_input.text = str('')
 
         #If the event is received from the 'away' text box
         elif event_catcher == 'away':
-            convert_rate = currency.convert(self.root.ids.away_currency_input.text, away_currency_code, home_currency_code)
+            cached_rate = float(self.root.ids.away_currency_input.text)
+
+            convert_rate = self.cached_conversion[away_country_details[0]] * cached_rate
+            convert_rate = "{0:.3f}".format(convert_rate)
             self.root.ids.home_currency_input.text = str(convert_rate)
             self.root.ids.app_status.text = (away_currency_code + '(' + away_country_details[2] + ') to ' + home_currency_code + '(' + home_country_details[2] +')')
         #If the event is received from the 'away' text box
+
         elif event_catcher == 'home':
-            convert_rate = currency.convert(self.root.ids.home_currency_input.text, home_currency_code, away_currency_code)
+            cached_rate = float(self.root.ids.home_currency_input.text)
+
+            convert_rate = cached_rate / self.cached_conversion[away_country_details[0]]
+            convert_rate = "{0:.3f}".format(convert_rate)
             self.root.ids.away_currency_input.text = str(convert_rate)
             self.root.ids.app_status.text = (home_currency_code + '(' + home_country_details[2] + ') to ' + away_currency_code + '(' + away_country_details[2] +')')
 
