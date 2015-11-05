@@ -7,6 +7,8 @@ BoxLayout:
             size: self.size
     orientation: 'vertical'
     Label:
+        halign: 'center'
+        valign: 'middle'
         font_size: 25
         text: app.current_trip
         color: (0, 0, 0, 1)
@@ -15,11 +17,11 @@ BoxLayout:
         Spinner:
             id: away_spinner
             values: app.saved_trips
-            on_text: app.handle_convert()
+            on_text: app.handle_convert('away')
         TextInput:
             font_size:40
             id: away_currency_input
-            on_text_validate: app.handle_convert()
+            on_text_validate: app.handle_convert('away')
             multiline: False
             size: 100, 350
     BoxLayout:
@@ -30,12 +32,14 @@ BoxLayout:
         TextInput:
             font_size:40
             id: home_currency_input
-            on_text_validate: app.handle_convert()
+            on_text_validate: app.handle_convert('home')
             multiline: False
             size: 100, 350
     BoxLayout
         orientation: 'horizontal'
         Label:
+            halign: 'center'
+            valign: 'middle'
             color: (0, 0, 0, 1)
             text: app.current_date_build
         Label:
