@@ -13,7 +13,7 @@ from kivy.core.window import Window
 class CurrencyConverterApp(App):
     def __init__(self):
         super(CurrencyConverterApp, self).__init__()
-        self.cached_conversion = {} # recommended by Pycharm
+        self.cached_conversion = {}  # recommended by Pycharm
 
     def build(self):
         Window.size = 350, 700
@@ -47,8 +47,7 @@ class CurrencyConverterApp(App):
         application_config = open("config.txt", 'r', encoding='utf-8')
         return application_config.readline()
 
-    focus_check = False
-
+    """ global use for current date and location, NOTE: ran into errors when placed in function"""
     current_date = time.strftime("%Y/%m/%d")
     application_config = open("config.txt", 'r', encoding='utf-8')
     next(application_config)
@@ -61,7 +60,7 @@ class CurrencyConverterApp(App):
             print(err)
 
     current_location = details.current_country(current_date)
-    current_trip = 'Current trip location:' + '\n' + details.current_country(current_date)
+    current_trip = 'Current Trip Location:' + '\n' + details.current_country(current_date)
 
     application_config.close()
 
@@ -172,18 +171,22 @@ class CurrencyConverterApp(App):
             convert_rate = self.cached_conversion[away_country_details[0]] * cached_rate
             convert_rate = "{0:.3f}".format(convert_rate)
             self.root.ids.home_currency_input.text = str(convert_rate)
-            self.root.ids.app_status.text = str(away_currency_code + '(' + str(away_country_details[2]).strip('\n') + ') to ' + home_currency_code + '(' + str(home_country_details[2]).strip('\n') + ')')
+            self.root.ids.app_status.text = str(away_currency_code + '(' + str(away_country_details[2]).strip(
+                '\n') + ') to ' + home_currency_code + '(' + str(home_country_details[2]).strip('\n') + ')')
             self.focus_check = True
 
-        # If the event is received from the 'away' text box
+        # If the event is received from the 'home' text box
         elif event_catcher == 'home':
             cached_rate = float(self.root.ids.home_currency_input.text)
 
             convert_rate = cached_rate / self.cached_conversion[away_country_details[0]]
             convert_rate = "{0:.3f}".format(convert_rate)
             self.root.ids.away_currency_input.text = str(convert_rate)
-            self.root.ids.app_status.text = str(home_currency_code + '(' + str(home_country_details[2]).strip('\n') + ') to ' + away_currency_code + '(' + (away_country_details[2]).strip('\n') + ')')
+            self.root.ids.app_status.text = str(home_currency_code + '(' + str(home_country_details[2]).strip(
+                '\n') + ') to ' + away_currency_code + '(' + (away_country_details[2]).strip('\n') + ')')
             self.focus_check = True
+
+    focus_check = False
 
     def on_focus(self, value):
         """ This function clears the status message when user starts typing and handles is correct operation """
@@ -195,6 +198,7 @@ class CurrencyConverterApp(App):
             else:
                 self.focus_check = False
         return
+
 
 if __name__ == '__main__':
     CurrencyConverterApp().run()
