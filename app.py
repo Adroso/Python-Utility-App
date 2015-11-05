@@ -4,21 +4,13 @@ from trip import Details
 from trip import Error
 import currency
 import time
-import datetime
 from datetime import datetime
 from kivy.app import App
 from kivy.lang import Builder
-# from kivy.properties import ObjectProperty
 from kivy.core.window import Window
-# from kivy.properties import StringProperty
-# from kivy.properties import ListProperty
-# from kivy.graphics import Color
 
 
 class CurrencyConverterApp(App):
-
-    # countries_spinner = StringProperty()
-    # saved_trips = ListProperty()
 
     saved_trips = []
     config_file = open("config.txt", 'r', encoding='utf-8')
@@ -59,8 +51,6 @@ class CurrencyConverterApp(App):
         self.root = Builder.load_file('gui.kv')
         self.config_check()
         self.disable_gui()
-
-
         return self.root
 
     def config_check(self):
@@ -72,24 +62,23 @@ class CurrencyConverterApp(App):
         if first_line.strip("\n") in all_country_details:
             for line in application_config:
                 if len(line.split(',')) != 3:
-                    self.root.ids.app_status.text = 'invalid trip details'
+                    self.root.ids.app_status.text = 'Invalid Trip Details'
                     self.disable_gui()
-
                     break
                 else:
-                    # self.root.ids.app_status.text = 'invalid trip details'
-                    self.root.ids.app_status.text = 'trip details accepted'
+                    self.root.ids.app_status.text = 'Trip Details Accepted'
         else:
-            self.root.ids.app_status.text = 'invalid trip details'
+            self.root.ids.app_status.text = 'Invalid Trip Details'
             self.disable_gui()
 
         application_config.close()
 
     def app_update(self):
+        """ This function handles the update currency button """
         self.enable_gui()
         self.update_currency()
         current_time = datetime.now().strftime('%H:%M:%S')
-        self.root.ids.app_status.text = 'updated at ' + current_time
+        self.root.ids.app_status.text = 'Updated At ' + current_time
 
     # def countries_spinner(self,):
     #     """ handle change of spinner selection, output result to label widget """
@@ -121,11 +110,10 @@ class CurrencyConverterApp(App):
         if self.root.ids.away_spinner.text == '':
             user_country = self.current_location
             self.root.ids.away_spinner.text = str(user_country)
-    
+            self.root.ids.home_currency_input.text = str('')
+
         cached_conversion = {}
         # convert_rate = currency.convert(self.root.ids.away_currency_input.text, away_currency_code, home_currency_code)
-
-
 
     def handle_convert(self, event_catcher):
         """handles the calculation of the conversion between rates"""
@@ -139,12 +127,16 @@ class CurrencyConverterApp(App):
         home_country_details = all_country_details.get(self.root.ids.user_country.text.strip('\n'))
         home_currency_code = home_country_details[1]
 
+        #On initial startup, stops -1 being displayed in the home text box.
+        if self.root.ids.away_currency_input.text == '\n':
+            self.root.ids.home_currency_input.text = str('')
 
-        if event_catcher == 'away':
+        #If the event is received from the 'away' text box
+        elif event_catcher == 'away':
             convert_rate = currency.convert(self.root.ids.away_currency_input.text, away_currency_code, home_currency_code)
             self.root.ids.home_currency_input.text = str(convert_rate)
             self.root.ids.app_status.text = (away_currency_code + '(' + away_country_details[2] + ') to ' + home_currency_code + '(' + home_country_details[2] +')')
-
+        #If the event is received from the 'away' text box
         elif event_catcher == 'home':
             convert_rate = currency.convert(self.root.ids.home_currency_input.text, home_currency_code, away_currency_code)
             self.root.ids.away_currency_input.text = str(convert_rate)
