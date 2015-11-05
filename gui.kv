@@ -17,7 +17,7 @@ BoxLayout:
         size_hint_y: 0.2
         Label:
             color: (1, 1, 1, 1)
-            font_size: 15
+            font_size: 18
             id: app_status
     Label:
         size_hint_y: 0.5
@@ -37,7 +37,7 @@ BoxLayout:
                 rectangle: self.x + 1, self.y + 1, self.width - 1, self.height -1
         Spinner:
             id: away_spinner
-            values: app.saved_trips
+            values: app.config_trips()
             on_text: app.handle_convert('away')
             canvas.after:
                 Color:
@@ -49,6 +49,7 @@ BoxLayout:
             id: away_currency_input
             on_text_validate: app.handle_convert('away')
             multiline: False
+            on_focus: app.on_focus('value')
             size: 100, 350
             canvas.after:
                 Color:
@@ -59,7 +60,7 @@ BoxLayout:
             id: user_country
             font_size: 16
             color: (1, 1, 1, 1)
-            text: app.home_country
+            text: app.home_country()
             canvas.before:
                 Color:
                     rgba: 0.098, 0.694, 1, 1
@@ -76,6 +77,7 @@ BoxLayout:
             id: home_currency_input
             on_text_validate: app.handle_convert('home')
             multiline: False
+            on_focus: app.on_focus('value')
             size: 100, 350
             canvas.after:
                 Color:
@@ -101,4 +103,4 @@ BoxLayout:
             valign: 'middle'
             size_hint_y: 1
             color: (0, 0, 0, 1)
-            text: app.current_date_build
+            text: app.current_date_build()
