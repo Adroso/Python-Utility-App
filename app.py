@@ -30,7 +30,7 @@ class CurrencyConverterApp(App):
 
     #Constucting current date string
     current_date = time.strftime("%Y/%m/%d")
-    current_date_build = 'Today is:' + ' ' + current_date
+    current_date_build = 'Today is:' + '\n' + current_date
 
     #Getting and constructing home country
     application_config = open("config.txt", 'r', encoding='utf-8')
@@ -46,7 +46,7 @@ class CurrencyConverterApp(App):
         except Error as err:
             print(err)
 
-    current_trip = 'Current trip location:' + ' ' + details.current_country(current_date)
+    current_trip = 'Current trip location:' + '\n' + details.current_country(current_date)
 
     application_config.close()
 
@@ -104,11 +104,10 @@ class CurrencyConverterApp(App):
         self.root.ids.home_currency_input.disabled = True
         self.root.ids.update_currency.disabled = True
 
-    def handle_convert(self):
+    def handle_convert(self, event_catcher):
 
         """handles the calculation of the conversion between rates"""
         all_country_details = currency.get_all_details()
-
 
         # extracting matching away code out of dictionary
         away_country_details = all_country_details.get(self.root.ids.away_spinner.text)
@@ -118,11 +117,15 @@ class CurrencyConverterApp(App):
         home_country_details = all_country_details.get(self.root.ids.user_country.text.strip('\n'))
         home_currency_code = home_country_details[1]
 
+        if event_catcher == 'away':
+            convert_rate = currency.convert(self.root.ids.away_currency_input.text, away_currency_code, home_currency_code)
+            self.root.ids.home_currency_input.text = str(convert_rate)
+            self.root.ids.app_status.text = (away_currency_code + '(' + away_country_details[2] + ') to ' + home_currency_code + '(' + home_country_details[2] +')')
 
-        convert_rate = currency.convert(self.root.ids.away_currency_input.text,away_currency_code,home_currency_code)
-        self.root.ids.home_currency_input.text = str(convert_rate)
-        self.root.ids.app_status.text = (away_currency_code + '(' + away_country_details[2] + ') to ' + home_currency_code + '(' + home_country_details[2] +')')
-
+        elif event_catcher == 'home':
+            convert_rate = currency.convert(self.root.ids.home_currency_input.text, home_currency_code, away_currency_code)
+            self.root.ids.away_currency_input.text = str(convert_rate)
+            self.root.ids.app_status.text = (home_currency_code + '(' + home_country_details[2] + ') to ' + away_currency_code + '(' + away_country_details[2] +')')
 
 
 if __name__ == '__main__':
