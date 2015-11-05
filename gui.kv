@@ -1,54 +1,104 @@
 BoxLayout:
     canvas.before:
         Color:
-            rgba: 1, 1, 1, 1
+            rgba: 0.96, 0.96, 0.96, 1
         Rectangle:
             pos: self.pos
             size: self.size
     orientation: 'vertical'
+    BoxLayout
+        orientation:'horizontal'
+        canvas.before:
+            Color:
+                rgba: 0.098, 0.694, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        size_hint_y: 0.2
+        Label:
+            color: (1, 1, 1, 1)
+            font_size: 15
+            id: app_status
     Label:
+        size_hint_y: 0.5
         halign: 'center'
         valign: 'middle'
         font_size: 25
         text: app.current_trip
         color: (0, 0, 0, 1)
-
-    BoxLayout:
+    GridLayout:
+        rows: 2
+        cols: 2
+        size_hint_y: 0.7
+        canvas.after:
+            Color:
+                rgba: 0.302, 0.302, 0.302, 1
+            Line:
+                rectangle: self.x + 1, self.y + 1, self.width - 1, self.height -1
         Spinner:
             id: away_spinner
             values: app.saved_trips
             on_text: app.handle_convert('away')
+            canvas.after:
+                Color:
+                    rgba: 0.302, 0.302, 0.302, 1
+                Line:
+                    rectangle: self.x + 1, self.y + 1, self.width - 1, self.height - 1
         TextInput:
-            font_size:40
+            font_size:30
             id: away_currency_input
             on_text_validate: app.handle_convert('away')
             multiline: False
             size: 100, 350
-    BoxLayout:
+            canvas.after:
+                Color:
+                    rgba: 0.302, 0.302, 0.302, 1
+                Line:
+                    rectangle: self.x + 1, self.y + 1, self.width - 1, self.height - 1
         Label:
             id: user_country
-            color: (0, 0, 0, 1)
+            font_size: 16
+            color: (1, 1, 1, 1)
             text: app.home_country
+            canvas.before:
+                Color:
+                    rgba: 0.098, 0.694, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            canvas.after:
+                Color:
+                    rgba: 0.302, 0.302, 0.302, 1
+                Line:
+                    rectangle: self.x + 1, self.y + 1, self.width - 1, self.height - 1
         TextInput:
-            font_size:40
+            font_size:30
             id: home_currency_input
             on_text_validate: app.handle_convert('home')
             multiline: False
             size: 100, 350
-    BoxLayout
-        orientation: 'horizontal'
-        Label:
-            halign: 'center'
-            valign: 'middle'
-            color: (0, 0, 0, 1)
-            text: app.current_date_build
-        Label:
-            color: (0, 0, 0, 1)
-            font_size: 10
-            id: app_status
-            size: 100, 350
-            pos: 0, 300
+            canvas.after:
+                Color:
+                    rgba: 0.302, 0.302, 0.302, 1
+                Line:
+                    rectangle: self.x + 1, self.y + 1, self.width - 1, self.height - 1
     Button:
+        size_hint_y: 0.5
         id: update_currency
         text: 'Update Currency'
         on_press: app.app_update()
+    BoxLayout
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.96, 0.96, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        orientation: 'horizontal'
+        Label:
+            font_size: 25
+            halign: 'center'
+            valign: 'middle'
+            size_hint_y: 1
+            color: (0, 0, 0, 1)
+            text: app.current_date_build
