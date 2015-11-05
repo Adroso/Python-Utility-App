@@ -45,6 +45,7 @@ class CurrencyConverterApp(App):
         except Error as err:
             print(err)
 
+    current_location = details.current_country(current_date)
     current_trip = 'Current trip location:' + '\n' + details.current_country(current_date)
 
     application_config.close()
@@ -116,8 +117,14 @@ class CurrencyConverterApp(App):
 
     def update_currency(self):
         """This function caches a conversion rate between the selected home country and away country"""
-        self.root.ids.away_spinner.text = str(self.current_trip)
-        
+
+        if self.root.ids.away_spinner.text == '':
+            user_country = self.current_location
+            self.root.ids.away_spinner.text = str(user_country)
+    
+        cached_conversion = {}
+        # convert_rate = currency.convert(self.root.ids.away_currency_input.text, away_currency_code, home_currency_code)
+
 
 
     def handle_convert(self, event_catcher):
@@ -132,6 +139,7 @@ class CurrencyConverterApp(App):
         home_country_details = all_country_details.get(self.root.ids.user_country.text.strip('\n'))
         home_currency_code = home_country_details[1]
 
+
         if event_catcher == 'away':
             convert_rate = currency.convert(self.root.ids.away_currency_input.text, away_currency_code, home_currency_code)
             self.root.ids.home_currency_input.text = str(convert_rate)
@@ -141,10 +149,6 @@ class CurrencyConverterApp(App):
             convert_rate = currency.convert(self.root.ids.home_currency_input.text, home_currency_code, away_currency_code)
             self.root.ids.away_currency_input.text = str(convert_rate)
             self.root.ids.app_status.text = (home_currency_code + '(' + home_country_details[2] + ') to ' + away_currency_code + '(' + away_country_details[2] +')')
-        else:
-            """lol"""
-            # self.root.ids.app_status.text =
-
 
 if __name__ == '__main__':
     CurrencyConverterApp().run()
